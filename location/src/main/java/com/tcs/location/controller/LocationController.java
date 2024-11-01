@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -38,7 +39,7 @@ public class LocationController {
         }
     }
 
-    @PutMapping("/{id}/city")
+    @PutMapping("/{location}/city")
     public ResponseEntity<LocationModel> updateCity(@PathVariable Long location, @RequestParam String city){
        try{
           LocationModel locationModel = locationService.updateCity(location,city);
@@ -50,7 +51,7 @@ public class LocationController {
        }
     }
 
-    @PutMapping("/{id}/country")
+    @PutMapping("/{location}/country")
     public ResponseEntity<LocationModel> updateCountry(@PathVariable Long location, @RequestParam String country){
        try{
            LocationModel locationModel = locationService.updateCountry(location,country);
@@ -61,4 +62,20 @@ public class LocationController {
           return  ResponseEntity.badRequest().build();
        }
     }
+
+    //Get Id
+    @GetMapping("/{location}/record")
+    public ResponseEntity<List<LocationModel>> getRecord(@PathVariable Long location){
+        try{
+            List<LocationModel> records = locationService.getRecordId(location);
+            return ResponseEntity.ok(records);
+        }catch (NoSuchElementException e){
+            return ResponseEntity.notFound().build();
+        } catch (Exception e){
+            return  ResponseEntity.badRequest().build();
+        }
+    }
+
+    //Delete ID
+
 }
