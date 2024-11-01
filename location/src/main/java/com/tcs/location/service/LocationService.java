@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -65,5 +66,14 @@ public class LocationService {
         }
         return records;
     }
+
+    //GetById
+    public List<LocationModel> getRecordId(Long location){
+        LocationModel locationModel = locationRepository.findById(location).orElseThrow(NoSuchElementException::new);
+        List<LocationModel> records = new LinkedList<>();
+        records.add(locationModel);
+        return records;
+    }
+    //DeleteById
 
 }
