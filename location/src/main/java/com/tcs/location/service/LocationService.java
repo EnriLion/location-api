@@ -26,10 +26,6 @@ public class LocationService {
     @Autowired
     private LocationRepository locationRepository;
 
-    //delete
-    public void deleteRecord(Long location){
-        locationRepository.deleteById(location);
-    }
 
     //update city
     public LocationModel updateCity(Long location, String city){
@@ -74,6 +70,16 @@ public class LocationService {
         records.add(locationModel);
         return records;
     }
+
     //DeleteById
+    public boolean deleteRecord(Long location){
+        LocationModel locationModel = locationRepository.findById(location).orElseThrow(NoSuchElementException::new);
+        if(locationModel != null){
+            locationRepository.deleteById(location);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
