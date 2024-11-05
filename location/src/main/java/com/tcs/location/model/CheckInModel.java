@@ -1,11 +1,14 @@
 package com.tcs.location.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,10 +31,9 @@ public class CheckInModel {
 //    @Column(name = "person")
 //    private Long person;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    @JsonBackReference
-    private EmployeeModel employee;
+    @OneToMany(mappedBy = "check", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //Cascade to manage check-ins/ fetch =
+    @JsonManagedReference
+    private List<LocationModel> locationModels= new ArrayList<>();
 
 //    public EmployeeModel getEmployee(){
 //        return  employee;

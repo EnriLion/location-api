@@ -40,9 +40,9 @@ public class LocationController {
     }
 
     @PutMapping("/{location}/city")
-    public ResponseEntity<LocationModel> updateCity(@PathVariable Long location, @RequestParam String city){
+    public ResponseEntity<LocationModel> updateCity(@PathVariable Long locationId, @RequestParam String city){
        try{
-          LocationModel locationModel = locationService.updateCity(location,city);
+          LocationModel locationModel = locationService.updateCity(locationId,city);
           return ResponseEntity.ok(locationModel);
        }catch (NoSuchElementException e){
            return ResponseEntity.notFound().build();
@@ -52,7 +52,7 @@ public class LocationController {
     }
 
     @PutMapping("/{location}/country")
-    public ResponseEntity<LocationModel> updateCountry(@PathVariable Long location, @RequestParam String country){
+    public ResponseEntity<LocationModel> updateCountry(@PathVariable Long locationId, @RequestParam String country){
        try{
            LocationModel locationModel = locationService.updateCountry(location,country);
            return ResponseEntity.ok(locationModel);
@@ -78,15 +78,8 @@ public class LocationController {
 
     //Delete ID
     @DeleteMapping("{location}/delete")
-    public ResponseEntity<String> deleteRecord(@PathVariable Long location){
-        try{
-            boolean isRemove = locationService.deleteRecord(location);
-            return ResponseEntity.noContent().build();
-        } catch(NoSuchElementException e){
-            return ResponseEntity.notFound().build();
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().build();
-        }
+    public ResponseEntity<Void> deleteRecord(@PathVariable Long location){
+        locationService.deleteRecord(location);
+        return ResponseEntity.noContent().build();
     }
-
 }

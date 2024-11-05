@@ -6,6 +6,7 @@ import com.tcs.location.model.LocationModel;
 import com.tcs.location.repository.CheckInRepository;
 import com.tcs.location.repository.EmployeeRepository;
 import com.tcs.location.repository.LocationRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 public class LocationService {
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -49,8 +51,12 @@ public class LocationService {
        LocationModel locationModel = new LocationModel();
        locationModel.setCity(city);
        locationModel.setCountry(country);
-       locationModel.setCheckInModel(checkInModel);
+       locationModel.setCheck(checkInModel);
        locationModel.setEmployee(employeeModel);
+
+       checkInModel.getLocationModels().add(locationModel);
+       employeeModel.getLocationModels().add(locationModel);
+
        return locationRepository.save(locationModel);
     }
 
@@ -63,6 +69,8 @@ public class LocationService {
         return records;
     }
 
+
+
     //GetById
     public List<LocationModel> getRecordId(Long location){
         LocationModel locationModel = locationRepository.findById(location).orElseThrow(NoSuchElementException::new);
@@ -72,14 +80,7 @@ public class LocationService {
     }
 
     //DeleteById
-    public boolean deleteRecord(Long location){
-        LocationModel locationModel = locationRepository.findById(location).orElseThrow(NoSuchElementException::new);
-        if(locationModel != null){
-            locationRepository.deleteById(location);
-            return true;
-        } else {
-            return false;
-        }
+    public void deleteRecord(Long location) {
+        locationRepository.deleteById(location);
     }
-
 }

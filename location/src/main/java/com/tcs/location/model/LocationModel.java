@@ -1,6 +1,8 @@
 package com.tcs.location.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,12 +25,12 @@ public class LocationModel {
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
-    @JsonBackReference
+    @JsonIgnoreProperties("locationModels")
     private EmployeeModel employee;
 
     @ManyToOne
     @JoinColumn(name = "check_id")
-    @JsonBackReference
-    private CheckInModel checkInModel;
+    @JsonIgnoreProperties("locationModels")
+    private CheckInModel check;
 
 }
