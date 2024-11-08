@@ -80,7 +80,13 @@ public class LocationService {
     }
 
     //DeleteById
-    public void deleteRecord(Long location) {
-        locationRepository.deleteById(location);
+    public boolean deleteRecord(Long location) {
+        LocationModel locationModel = locationRepository.findById(location).orElseThrow(NoSuchElementException::new);
+        if(locationModel != null){
+            locationRepository.deleteByLocationId(location);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

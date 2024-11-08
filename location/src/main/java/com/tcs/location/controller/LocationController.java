@@ -77,9 +77,14 @@ public class LocationController {
     }
 
     //Delete ID
-    @DeleteMapping("{location}/delete")
-    public ResponseEntity<Void> deleteRecord(@PathVariable Long location){
-        locationService.deleteRecord(location);
-        return ResponseEntity.noContent().build();
-    }
-}
+    @DeleteMapping("/{location}/delete")
+    public ResponseEntity<String> deleteRecord(@PathVariable Long location) {
+        try{
+            boolean isRemove = locationService.deleteRecord(location);
+            return ResponseEntity.noContent().build();
+        } catch (NoSuchElementException e){
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }}
