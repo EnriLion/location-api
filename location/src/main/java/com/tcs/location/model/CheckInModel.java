@@ -28,12 +28,18 @@ public class CheckInModel {
     @Column(name = "status")
     private Boolean status = false;
 
-//    @Column(name = "person")
-//    private Long person;
+//    @Column(name = "employee_id")
+//    private EmployeeModel employee;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    @JsonBackReference("employee-check")
+    private EmployeeModel employee;
 
     @OneToMany(mappedBy = "check", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //Cascade to manage check-ins/ fetch =
-    @JsonManagedReference
+    @JsonBackReference("check-location")
     private List<LocationModel> locationModels= new ArrayList<>();
+
 
 //    public EmployeeModel getEmployee(){
 //        return  employee;

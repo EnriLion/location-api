@@ -18,12 +18,12 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
-    @PostMapping("/{id}/{checkInId}")
-    public ResponseEntity<LocationModel> createRecord(@RequestParam String city, @RequestParam String country, @PathVariable Long checkInId, @PathVariable Long id){
+    @PostMapping("/{checkInId}")
+    public ResponseEntity<LocationModel> createRecord(@RequestParam String city, @RequestParam String country, @PathVariable Long checkInId){
         if(city.isEmpty() || country.isEmpty()){
             return ResponseEntity.notFound().build();
         } else {
-            LocationModel locationModel = locationService.registerLocation(city,country,checkInId,id);
+            LocationModel locationModel = locationService.registerLocation(city,country,checkInId);
             return ResponseEntity.ok(locationModel);
         }
     }

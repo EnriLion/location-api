@@ -44,20 +44,24 @@ public class LocationService {
     }
 
     //post //Long id, Long checkInId
-    public LocationModel registerLocation(String city, String country, Long checkInId, Long id){
-        EmployeeModel employeeModel = employeeRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    public LocationModel registerLocation(String city, String country, Long checkInId){
         CheckInModel checkInModel = checkInRepository.findById(checkInId).orElseThrow(NoSuchElementException::new);
+        LocationModel locationModel = new LocationModel();
+        if(!checkInModel.getStatus()){
+            EmployeeModel employeeModel = checkInModel.getEmployee();
+            locationModel.setCity(city);
+            locationModel.setCountry(country);
+            locationModel.setCheck(checkInModel);
+//            locationModel.setEmployee(employeeModel);
+            locationModel.setEmployeeId(employeeModel);
 
-       LocationModel locationModel = new LocationModel();
-       locationModel.setCity(city);
-       locationModel.setCountry(country);
-       locationModel.setCheck(checkInModel);
-       locationModel.setEmployee(employeeModel);
+            checkInModel.getLocationModels().add(locationModel);
+            employeeModel.getLocationModels().add(locationModel);
 
-       checkInModel.getLocationModels().add(locationModel);
-       employeeModel.getLocationModels().add(locationModel);
-
-       return locationRepository.save(locationModel);
+            return locationRepository.save(locationModel);
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     //get
