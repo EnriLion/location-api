@@ -47,7 +47,7 @@ public class LocationService {
     public LocationModel registerLocation(String city, String country, Long checkInId){
         CheckInModel checkInModel = checkInRepository.findById(checkInId).orElseThrow(NoSuchElementException::new);
         LocationModel locationModel = new LocationModel();
-        if(!checkInModel.getStatus()){
+        if(checkInModel.getStatus()){
             EmployeeModel employeeModel = checkInModel.getEmployee();
             locationModel.setCity(city);
             locationModel.setCountry(country);

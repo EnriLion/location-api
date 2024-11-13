@@ -32,9 +32,9 @@ public class EmployeeModel {
     @JsonBackReference("employee-location")
     private List<LocationModel> locationModels = new ArrayList<>();
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //Cascade to manage check-ins/ fetch =
-    @JsonManagedReference("employee-check")
-    private List<CheckInModel> checkIns = new ArrayList<>();
+//    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //Cascade to manage check-ins/ fetch =
+//    @JsonManagedReference("employee-check")
+//    private List<CheckInModel> checkIns = new ArrayList<>();
 
 //    //Getter & Setters
 //
